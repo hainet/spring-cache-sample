@@ -1,6 +1,5 @@
 package com.hainet.spring.cache.sample.domain.service;
 
-import ch.qos.logback.classic.gaffer.ConfigurationDelegate;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
