@@ -25,7 +25,7 @@ public class SlowServiceTest {
         assertThat(this.service.uncacheableOperation(), is("OK"));
         assertThat(this.service.uncacheableOperation(), is("OK"));
 
-        assertThat(System.currentTimeMillis() - start, is(greaterThan(5000L)));
+        assertThat(System.currentTimeMillis() - start, is(greaterThan(5_000L)));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class SlowServiceTest {
         assertThat(this.service.cacheableOperation(), is("OK"));
         assertThat(this.service.cacheableOperation(), is("OK"));
 
-        assertThat(System.currentTimeMillis() - start, is(lessThan(5000L)));
+        assertThat(System.currentTimeMillis() - start, is(lessThan(5_000L)));
     }
 
     @Test
@@ -52,8 +52,8 @@ public class SlowServiceTest {
         assertThat(this.service.cacheableOperation(), is("OK"));
 
         final long end = System.currentTimeMillis() - start;
-        assertThat(end, is(greaterThan(5000L)));
-        assertThat(end, is(lessThan(7000L)));
+        assertThat(end, is(greaterThan(5_000L)));
+        assertThat(end, is(lessThan(7_000L)));
     }
 
     @Test
@@ -70,8 +70,8 @@ public class SlowServiceTest {
         assertThat(this.service.cacheableOperation(), is("OK"));
 
         final long end = System.currentTimeMillis() - start;
-        assertThat(end, is(greaterThan(5000L)));
-        assertThat(end, is(lessThan(7000L)));
+        assertThat(end, is(greaterThan(5_000L)));
+        assertThat(end, is(lessThan(7_000L)));
     }
 
     @Test
@@ -87,7 +87,31 @@ public class SlowServiceTest {
         assertThat(this.service.cacheableWithArgumentOperation(arg), is("OK"));
 
         final long end = System.currentTimeMillis() - start;
-        assertThat(end, is(greaterThan(5000L)));
-        assertThat(end, is(lessThan(7000L)));
+        assertThat(end, is(greaterThan(5_000L)));
+        assertThat(end, is(lessThan(7_000L)));
+    }
+
+    @Test
+    public void conditionalOperationTest_false() {
+        final long start = System.currentTimeMillis();
+
+        // Conditional false.
+        assertThat(this.service.conditionalCachePutOperation(false), is("OK"));
+        // Can't use cache.
+        assertThat(this.service.conditionalCacheableOperation(false), is("OK"));
+
+        assertThat(System.currentTimeMillis() - start, is(greaterThan(5_000L)));
+    }
+
+    @Test
+    public void conditionalOperationTest_true() {
+        final long start = System.currentTimeMillis();
+
+        // Conditional false.
+        assertThat(this.service.conditionalCachePutOperation(true), is("OK"));
+        // Can't use cache.
+        assertThat(this.service.conditionalCacheableOperation(true), is("OK"));
+
+        assertThat(System.currentTimeMillis() - start, is(lessThan(5_000L)));
     }
 }

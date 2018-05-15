@@ -1,5 +1,6 @@
 package com.hainet.spring.cache.sample.domain.service;
 
+import ch.qos.logback.classic.gaffer.ConfigurationDelegate;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -71,6 +72,32 @@ public class SlowService {
     @CachePut
     public String cachePutWithArgumentOperation(final String arg) {
         System.out.println(this.getClass().getSimpleName() + "#cachePutWithArgumentOperation is invoked.");
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "OK";
+    }
+
+    @Cacheable(condition = "#caching")
+    public String conditionalCacheableOperation(final boolean caching) {
+        System.out.println(this.getClass().getSimpleName() + "#conditionalCacheableOperation is invoked.");
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "OK";
+    }
+
+    @CachePut(condition = "#caching")
+    public String conditionalCachePutOperation(final boolean caching) {
+        System.out.println(this.getClass().getSimpleName() + "#conditionalCachePutOperation is invoked.");
 
         try {
             TimeUnit.SECONDS.sleep(3);
