@@ -114,4 +114,28 @@ public class SlowServiceTest {
 
         assertThat(System.currentTimeMillis() - start, is(lessThan(5_000L)));
     }
+
+    @Test
+    public void unlessOperationTest_ok() {
+        final long start = System.currentTimeMillis();
+
+        // Cache.
+        assertThat(this.service.cachePutReturningOkOperation(), is("OK"));
+        // Use cache.
+        assertThat(this.service.cacheableOperation(), is("OK"));
+
+        assertThat(System.currentTimeMillis() - start, is(greaterThan(5_000L)));
+    }
+
+    @Test
+    public void unlessOperationTest_ng() {
+        final long start = System.currentTimeMillis();
+
+        // Cache.
+        assertThat(this.service.cachePutReturningNgOperation(), is("OK"));
+        // Use cache.
+        assertThat(this.service.cacheableOperation(), is("OK"));
+
+        assertThat(System.currentTimeMillis() - start, is(greaterThan(5_000L)));
+    }
 }

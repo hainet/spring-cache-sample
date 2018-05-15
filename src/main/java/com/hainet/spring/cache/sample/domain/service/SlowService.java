@@ -107,4 +107,30 @@ public class SlowService {
 
         return "OK";
     }
+
+    @CachePut(unless = "#result.equals('OK')")
+    public String cachePutReturningOkOperation() {
+        System.out.println(this.getClass().getSimpleName() + "#cachePutReturningOk is invoked.");
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "OK";
+    }
+
+    @CachePut(unless = "#result.equals('NG')")
+    public String cachePutReturningNgOperation() {
+        System.out.println(this.getClass().getSimpleName() + "#cachePutReturningNg is invoked.");
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "OK";
+    }
 }
