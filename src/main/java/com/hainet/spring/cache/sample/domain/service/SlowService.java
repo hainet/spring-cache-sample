@@ -54,4 +54,30 @@ public class SlowService {
 
         return "OK";
     }
+
+    @Cacheable
+    public String cacheableWithArgumentOperation(final String arg) {
+        System.out.println(this.getClass().getSimpleName() + "#cacheableWithArgumentOperation is invoked.");
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "OK";
+    }
+
+    @CachePut
+    public String cachePutWithArgumentOperation(final String arg) {
+        System.out.println(this.getClass().getSimpleName() + "#cachePutWithArgumentOperation is invoked.");
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "OK";
+    }
 }

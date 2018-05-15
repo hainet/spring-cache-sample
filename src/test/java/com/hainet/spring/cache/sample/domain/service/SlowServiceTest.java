@@ -73,4 +73,21 @@ public class SlowServiceTest {
         assertThat(end, is(greaterThan(5000L)));
         assertThat(end, is(lessThan(7000L)));
     }
+
+    @Test
+    public void withArgumentOperationTest() {
+        final long start = System.currentTimeMillis();
+        final String arg = "Argument";
+
+        // Cache with argument.
+        assertThat(this.service.cachePutWithArgumentOperation(arg), is("OK"));
+        // Can't use cache.
+        assertThat(this.service.cacheableOperation(), is("OK"));
+        // Use cache
+        assertThat(this.service.cacheableWithArgumentOperation(arg), is("OK"));
+
+        final long end = System.currentTimeMillis() - start;
+        assertThat(end, is(greaterThan(5000L)));
+        assertThat(end, is(lessThan(7000L)));
+    }
 }
